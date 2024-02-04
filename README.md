@@ -1,0 +1,1 @@
+Gemini API key: AIzaSyCMBnDWeOZ2xDLDaPjn2M0BNoRXSFSEflM
