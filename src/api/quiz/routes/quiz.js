@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * question router
+ * quiz router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::question.question');
+module.exports = createCoreRouter('api::quiz.quiz');

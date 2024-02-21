@@ -4,26 +4,29 @@
   "info": {
     "singularName": "attempt",
     "pluralName": "attempts",
-    "displayName": "attempt"
+    "displayName": "attempt",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "aid": {
-      "type": "uid",
-      "required": true
-    },
-    "attempt": {
-      "type": "json",
-      "required": true
-    },
-    "question": {
+    "quiz": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::question.question",
+      "target": "api::quiz.quiz",
       "inversedBy": "attempts"
+    },
+    "public": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::public.public",
+      "inversedBy": "attempts"
+    },
+    "answers": {
+      "type": "json",
+      "required": true
     }
   }
 }

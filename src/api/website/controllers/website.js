@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * question controller
+ * website controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::question.question');
+module.exports = createCoreController('api::website.website');
