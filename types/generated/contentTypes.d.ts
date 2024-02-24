@@ -802,7 +802,13 @@ export interface ApiAttemptAttempt extends Schema.CollectionType {
       'manyToOne',
       'api::public.public'
     >;
-    answers: Attribute.JSON & Attribute.Required;
+    questions: Attribute.JSON & Attribute.Required;
+    difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']> &
+      Attribute.Required;
+    questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'MCQ'>;
+    inputValue: Attribute.Text & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -879,13 +885,13 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
       'oneToMany',
       'api::attempt.attempt'
     >;
-    topic: Attribute.String & Attribute.Required;
+    inputValue: Attribute.Text & Attribute.Required;
     public: Attribute.Relation<
       'api::quiz.quiz',
       'manyToOne',
       'api::public.public'
     >;
-    type: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
+    questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
       Attribute.Required &
       Attribute.DefaultTo<'MCQ'>;
     questions: Attribute.JSON & Attribute.Required;
@@ -895,37 +901,6 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiSolutionSolution extends Schema.CollectionType {
-  collectionName: 'solutions';
-  info: {
-    singularName: 'solution';
-    pluralName: 'solutions';
-    displayName: 'solution';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    solution: Attribute.JSON & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::solution.solution',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::solution.solution',
-      'oneToOne',
-      'admin::user'
-    > &
       Attribute.Private;
   };
 }
@@ -984,7 +959,6 @@ declare module '@strapi/types' {
       'api::attempt.attempt': ApiAttemptAttempt;
       'api::public.public': ApiPublicPublic;
       'api::quiz.quiz': ApiQuizQuiz;
-      'api::solution.solution': ApiSolutionSolution;
       'api::website.website': ApiWebsiteWebsite;
     }
   }
