@@ -4,7 +4,8 @@
   "info": {
     "singularName": "public",
     "pluralName": "publics",
-    "displayName": "Public"
+    "displayName": "Public",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,16 +16,20 @@
       "type": "uid",
       "required": true
     },
-    "attempts": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::attempt.attempt",
-      "mappedBy": "public"
-    },
     "quizzes": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::quiz.quiz",
+      "mappedBy": "public"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "attempts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::attempt.attempt",
       "mappedBy": "public"
     }
   }

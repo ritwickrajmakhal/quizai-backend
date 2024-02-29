@@ -18,13 +18,8 @@
         "easy",
         "medium",
         "hard"
-      ]
-    },
-    "attempts": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::attempt.attempt",
-      "mappedBy": "quiz"
+      ],
+      "required": true
     },
     "inputValue": {
       "type": "text",
@@ -45,12 +40,19 @@
         "SAQ",
         "LAQ"
       ],
-      "required": true,
-      "default": "MCQ"
-    },
-    "questions": {
-      "type": "json",
       "required": true
+    },
+    "question": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::question.question",
+      "mappedBy": "quiz"
+    },
+    "attempts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::attempt.attempt",
+      "mappedBy": "quiz"
     }
   }
 }

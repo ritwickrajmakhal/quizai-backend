@@ -40,7 +40,7 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['http://localhost:3000', 'http://localhost:1337', 'https://quiz-ai.azurewebsites.net', 'https://quizai-app.azurewebsites.net'], // specify allowed origins
+      origin: ['http://localhost:3000', 'http://localhost:1337', 'ritwickportfolio.azurewebsites.net', 'https://quizai-app.azurewebsites.net'], // specify allowed origins
       methods: ['GET', 'POST', 'PUT', 'DELETE'], // specify allowed methods
       headers: ['Authorization', 'Content-Type', 'bearer'], // specify allowed headers
     },

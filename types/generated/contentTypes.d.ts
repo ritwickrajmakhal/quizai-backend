@@ -792,6 +792,7 @@ export interface ApiAttemptAttempt extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
+    answers: Attribute.JSON & Attribute.Required;
     quiz: Attribute.Relation<
       'api::attempt.attempt',
       'manyToOne',
@@ -802,13 +803,6 @@ export interface ApiAttemptAttempt extends Schema.CollectionType {
       'manyToOne',
       'api::public.public'
     >;
-    questions: Attribute.JSON & Attribute.Required;
-    difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']> &
-      Attribute.Required;
-    questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
-      Attribute.Required &
-      Attribute.DefaultTo<'MCQ'>;
-    inputValue: Attribute.Text & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -833,21 +827,23 @@ export interface ApiPublicPublic extends Schema.CollectionType {
     singularName: 'public';
     pluralName: 'publics';
     displayName: 'Public';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     userId: Attribute.UID & Attribute.Required;
-    attempts: Attribute.Relation<
-      'api::public.public',
-      'oneToMany',
-      'api::attempt.attempt'
-    >;
     quizzes: Attribute.Relation<
       'api::public.public',
       'oneToMany',
       'api::quiz.quiz'
+    >;
+    name: Attribute.String & Attribute.Required;
+    attempts: Attribute.Relation<
+      'api::public.public',
+      'oneToMany',
+      'api::attempt.attempt'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -867,6 +863,42 @@ export interface ApiPublicPublic extends Schema.CollectionType {
   };
 }
 
+export interface ApiQuestionQuestion extends Schema.CollectionType {
+  collectionName: 'questions';
+  info: {
+    singularName: 'question';
+    pluralName: 'questions';
+    displayName: 'question';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quiz: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'api::quiz.quiz'
+    >;
+    questions: Attribute.JSON & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiQuizQuiz extends Schema.CollectionType {
   collectionName: 'quizzes';
   info: {
@@ -879,12 +911,8 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']>;
-    attempts: Attribute.Relation<
-      'api::quiz.quiz',
-      'oneToMany',
-      'api::attempt.attempt'
-    >;
+    difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']> &
+      Attribute.Required;
     inputValue: Attribute.Text & Attribute.Required;
     public: Attribute.Relation<
       'api::quiz.quiz',
@@ -892,9 +920,17 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
       'api::public.public'
     >;
     questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
-      Attribute.Required &
-      Attribute.DefaultTo<'MCQ'>;
-    questions: Attribute.JSON & Attribute.Required;
+      Attribute.Required;
+    question: Attribute.Relation<
+      'api::quiz.quiz',
+      'oneToOne',
+      'api::question.question'
+    >;
+    attempts: Attribute.Relation<
+      'api::quiz.quiz',
+      'oneToMany',
+      'api::attempt.attempt'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -958,6 +994,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::attempt.attempt': ApiAttemptAttempt;
       'api::public.public': ApiPublicPublic;
+      'api::question.question': ApiQuestionQuestion;
       'api::quiz.quiz': ApiQuizQuiz;
       'api::website.website': ApiWebsiteWebsite;
     }
