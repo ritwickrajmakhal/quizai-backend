@@ -31,6 +31,10 @@
       "relation": "oneToMany",
       "target": "api::attempt.attempt",
       "mappedBy": "public"
+    },
+    "picture": {
+      "type": "string",
+      "required": true
     }
   }
 }

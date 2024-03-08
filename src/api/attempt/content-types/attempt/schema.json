@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "answers": {
-      "type": "json",
-      "required": true
-    },
     "quiz": {
       "type": "relation",
       "relation": "manyToOne",
@@ -27,6 +23,14 @@
       "relation": "manyToOne",
       "target": "api::public.public",
       "inversedBy": "attempts"
+    },
+    "total_points": {
+      "type": "float",
+      "required": true
+    },
+    "answers": {
+      "type": "json",
+      "required": true
     }
   }
 }

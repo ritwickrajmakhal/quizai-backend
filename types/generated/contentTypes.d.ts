@@ -792,7 +792,6 @@ export interface ApiAttemptAttempt extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    answers: Attribute.JSON & Attribute.Required;
     quiz: Attribute.Relation<
       'api::attempt.attempt',
       'manyToOne',
@@ -803,6 +802,8 @@ export interface ApiAttemptAttempt extends Schema.CollectionType {
       'manyToOne',
       'api::public.public'
     >;
+    total_points: Attribute.Float & Attribute.Required;
+    answers: Attribute.JSON & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -845,6 +846,7 @@ export interface ApiPublicPublic extends Schema.CollectionType {
       'oneToMany',
       'api::attempt.attempt'
     >;
+    picture: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -856,42 +858,6 @@ export interface ApiPublicPublic extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::public.public',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiQuestionQuestion extends Schema.CollectionType {
-  collectionName: 'questions';
-  info: {
-    singularName: 'question';
-    pluralName: 'questions';
-    displayName: 'question';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    quiz: Attribute.Relation<
-      'api::question.question',
-      'oneToOne',
-      'api::quiz.quiz'
-    >;
-    questions: Attribute.JSON & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::question.question',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::question.question',
       'oneToOne',
       'admin::user'
     > &
@@ -913,7 +879,6 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
   attributes: {
     difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']> &
       Attribute.Required;
-    inputValue: Attribute.Text & Attribute.Required;
     public: Attribute.Relation<
       'api::quiz.quiz',
       'manyToOne',
@@ -921,16 +886,13 @@ export interface ApiQuizQuiz extends Schema.CollectionType {
     >;
     questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
       Attribute.Required;
-    question: Attribute.Relation<
-      'api::quiz.quiz',
-      'oneToOne',
-      'api::question.question'
-    >;
     attempts: Attribute.Relation<
       'api::quiz.quiz',
       'oneToMany',
       'api::attempt.attempt'
     >;
+    name: Attribute.String & Attribute.Required;
+    questions: Attribute.JSON & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -994,7 +956,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::attempt.attempt': ApiAttemptAttempt;
       'api::public.public': ApiPublicPublic;
-      'api::question.question': ApiQuestionQuestion;
       'api::quiz.quiz': ApiQuizQuiz;
       'api::website.website': ApiWebsiteWebsite;
     }
