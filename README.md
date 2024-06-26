@@ -37,5 +37,5 @@ JWT_SECRET=uU9Kq9KwxQASuonuO+sEMA==
 ### Run the project
 
 ```
-npm start
+npm run develop
 ```
