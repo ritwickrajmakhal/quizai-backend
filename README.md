@@ -65,3 +65,4 @@ coverimage
 ```
 https://sharedstorageritwick.blob.core.windows.net/quizai-storage/assets/make_a_new_background_for_my_website_whose_name_is_upscaled_min_2d200c6c8f.jpg
 ```
+- Create a Strapi API key (For Quiz AI APP)
