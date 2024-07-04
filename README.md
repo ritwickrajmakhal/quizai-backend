@@ -32,6 +32,11 @@ API_TOKEN_SALT=c0VzwAzPigif15zJH+I+Wg==
 ADMIN_JWT_SECRET=i6IcP2W/br2K7grNJSyVCg==
 TRANSFER_TOKEN_SALT=+JPXyG5HHilQFZ1agqNbTg==
 JWT_SECRET=uU9Kq9KwxQASuonuO+sEMA==
+DATABASE_CLIENT=
+DATABASE_HOST=
+DATABASE_NAME=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
 ```
 
 ### Run the project
@@ -39,30 +44,3 @@ JWT_SECRET=uU9Kq9KwxQASuonuO+sEMA==
 ```
 npm run develop
 ```
-### Strapi Setup
-
-- Go to content manager, under SINGLE TYPES click on website and fill the values as follows:
-name:
-```
-Quiz AI
-```
-quotes:
-```
-[
-  "Quiz AI: Where knowledge meets technology in a battle of wits.",
-  "In the realm of Quiz AI, every question is a gateway to learning.",
-  "Unlock the power of artificial intelligence through the fun and challenge of Quiz AI.",
-  "Quiz AI: Where curiosity sparks and intelligence thrives.",
-  "Experience the future of trivia with Quiz AI – where human curiosity meets artificial intelligence.",
-  "Quiz AI: Your digital companion in the pursuit of knowledge.",
-  "Engage, learn, and conquer with Quiz AI – the ultimate test of intellect and wit.",
-  "Let Quiz AI be your guide through the endless realms of information and trivia.",
-  "In the world of Quiz AI, the quest for knowledge is infinite and exhilarating.",
-  "Challenge your mind, expand your horizons – all with the help of Quiz AI."
-]
-```
-coverimage
-```
-https://sharedstorageritwick.blob.core.windows.net/quizai-storage/assets/make_a_new_background_for_my_website_whose_name_is_upscaled_min_2d200c6c8f.jpg
-```
-- Create a Strapi API key (For Quiz AI APP)
