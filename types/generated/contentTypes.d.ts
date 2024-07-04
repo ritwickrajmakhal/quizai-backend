@@ -362,6 +362,129 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAttemptAttempt extends Schema.CollectionType {
+  collectionName: 'attempts';
+  info: {
+    singularName: 'attempt';
+    pluralName: 'attempts';
+    displayName: 'attempt';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quiz: Attribute.Relation<
+      'api::attempt.attempt',
+      'manyToOne',
+      'api::quiz.quiz'
+    >;
+    public: Attribute.Relation<
+      'api::attempt.attempt',
+      'manyToOne',
+      'api::public.public'
+    >;
+    total_points: Attribute.Float & Attribute.Required;
+    answers: Attribute.JSON & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::attempt.attempt',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::attempt.attempt',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPublicPublic extends Schema.CollectionType {
+  collectionName: 'publics';
+  info: {
+    singularName: 'public';
+    pluralName: 'publics';
+    displayName: 'Public';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    userId: Attribute.UID & Attribute.Required;
+    quizzes: Attribute.Relation<
+      'api::public.public',
+      'oneToMany',
+      'api::quiz.quiz'
+    >;
+    name: Attribute.String & Attribute.Required;
+    attempts: Attribute.Relation<
+      'api::public.public',
+      'oneToMany',
+      'api::attempt.attempt'
+    >;
+    picture: Attribute.String & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::public.public',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::public.public',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuizQuiz extends Schema.CollectionType {
+  collectionName: 'quizzes';
+  info: {
+    singularName: 'quiz';
+    pluralName: 'quizzes';
+    displayName: 'quiz';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']> &
+      Attribute.Required;
+    public: Attribute.Relation<
+      'api::quiz.quiz',
+      'manyToOne',
+      'api::public.public'
+    >;
+    questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
+      Attribute.Required;
+    attempts: Attribute.Relation<
+      'api::quiz.quiz',
+      'oneToMany',
+      'api::attempt.attempt'
+    >;
+    name: Attribute.String & Attribute.Required;
+    questions: Attribute.JSON & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -512,6 +635,12 @@ export interface PluginContentReleasesRelease extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     releasedAt: Attribute.DateTime;
+    scheduledAt: Attribute.DateTime;
+    timezone: Attribute.String;
+    status: Attribute.Enumeration<
+      ['ready', 'blocked', 'failed', 'done', 'empty']
+    > &
+      Attribute.Required;
     actions: Attribute.Relation<
       'plugin::content-releases.release',
       'oneToMany',
@@ -566,6 +695,7 @@ export interface PluginContentReleasesReleaseAction
       'manyToOne',
       'plugin::content-releases.release'
     >;
+    isEntryValid: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -780,162 +910,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiAttemptAttempt extends Schema.CollectionType {
-  collectionName: 'attempts';
-  info: {
-    singularName: 'attempt';
-    pluralName: 'attempts';
-    displayName: 'attempt';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    quiz: Attribute.Relation<
-      'api::attempt.attempt',
-      'manyToOne',
-      'api::quiz.quiz'
-    >;
-    public: Attribute.Relation<
-      'api::attempt.attempt',
-      'manyToOne',
-      'api::public.public'
-    >;
-    total_points: Attribute.Float & Attribute.Required;
-    answers: Attribute.JSON & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::attempt.attempt',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::attempt.attempt',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPublicPublic extends Schema.CollectionType {
-  collectionName: 'publics';
-  info: {
-    singularName: 'public';
-    pluralName: 'publics';
-    displayName: 'Public';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    userId: Attribute.UID & Attribute.Required;
-    quizzes: Attribute.Relation<
-      'api::public.public',
-      'oneToMany',
-      'api::quiz.quiz'
-    >;
-    name: Attribute.String & Attribute.Required;
-    attempts: Attribute.Relation<
-      'api::public.public',
-      'oneToMany',
-      'api::attempt.attempt'
-    >;
-    picture: Attribute.String & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::public.public',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::public.public',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiQuizQuiz extends Schema.CollectionType {
-  collectionName: 'quizzes';
-  info: {
-    singularName: 'quiz';
-    pluralName: 'quizzes';
-    displayName: 'quiz';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    difficultyLevel: Attribute.Enumeration<['easy', 'medium', 'hard']> &
-      Attribute.Required;
-    public: Attribute.Relation<
-      'api::quiz.quiz',
-      'manyToOne',
-      'api::public.public'
-    >;
-    questionsType: Attribute.Enumeration<['MCQ', 'MSQ', 'NAT', 'SAQ', 'LAQ']> &
-      Attribute.Required;
-    attempts: Attribute.Relation<
-      'api::quiz.quiz',
-      'oneToMany',
-      'api::attempt.attempt'
-    >;
-    name: Attribute.String & Attribute.Required;
-    questions: Attribute.JSON & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::quiz.quiz', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiWebsiteWebsite extends Schema.SingleType {
-  collectionName: 'websites';
-  info: {
-    singularName: 'website';
-    pluralName: 'websites';
-    displayName: 'website';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    quotes: Attribute.JSON & Attribute.Required;
-    coverImage: Attribute.Media & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::website.website',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::website.website',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -946,6 +920,9 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::attempt.attempt': ApiAttemptAttempt;
+      'api::public.public': ApiPublicPublic;
+      'api::quiz.quiz': ApiQuizQuiz;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -954,10 +931,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::attempt.attempt': ApiAttemptAttempt;
-      'api::public.public': ApiPublicPublic;
-      'api::quiz.quiz': ApiQuizQuiz;
-      'api::website.website': ApiWebsiteWebsite;
     }
   }
 }
